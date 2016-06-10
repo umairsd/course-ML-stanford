@@ -15,13 +15,24 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
+% h_theta = sigmoid(theta' * X);
 
-
-
-
-
+for i = 1 : m
+    example_i = X(i, :);
+    
+    % From Wk2, we know that x(i) is a column vector in the 
+    % equation theta' * x
+    x_i = example_i';
+    
+    h_i = sigmoid(theta' * x_i);
+    
+    if h_i >= 0.5
+        p(i) = 1;
+    else
+        p(i) = 0;
+    end
+end
 
 % =========================================================================
-
 
 end

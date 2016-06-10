@@ -9,9 +9,10 @@ g = zeros(size(z));
 % Instructions: Compute the sigmoid of each value of z (z can be a matrix,
 %               vector or scalar).
 
+e_pow = exp(-z);
+denom = 1 + e_pow;
 
-
-
+g = 1 ./ denom;
 
 % =============================================================
 

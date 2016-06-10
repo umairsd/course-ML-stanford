@@ -9,7 +9,6 @@ m = length(y); % number of training examples
 
 % You need to return the following variables correctly 
 J = 0;
-grad = zeros(size(theta));
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta.
@@ -18,9 +17,19 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 
+%% Calculate J & gradient (non-regularized)
+[J_orig, gradient_orig] = costFunction(theta, X, y);
 
+%% Calculate the regularization factors
+% NOTE: Theta1 does not need to be regularized
+theta_without_theta1 = theta(2 : size(theta, 1));
+regJ = lambda * sum(theta_without_theta1 .* theta_without_theta1) / (2 * m);
 
+regG = (lambda/m) .* theta;
+regG(1) = 0;
 
+J = J_orig + regJ;
+grad = gradient_orig + regG;
 
 % =============================================================
 
