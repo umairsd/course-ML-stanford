@@ -31,9 +31,19 @@ X = [ones(m, 1) X];
 %       
 
 
+% X             m x n
+% all_theta     k x n
+% all_theta'    n * k
+% h_theta       m x k
 
+% each row of h_theta contains a k-dimensional vector. The index of each 
+% element of this vector represents the label of the classifer, and the 
+% value represents the probability that it belongs to the given classifier
 
+h_theta = sigmoid(X * all_theta');
 
+[maxVal, classiferIndex] = max(h_theta, [], 2);
+p = classiferIndex;
 
 
 % =========================================================================
