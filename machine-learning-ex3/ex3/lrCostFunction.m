@@ -37,7 +37,7 @@ grad = zeros(size(theta));
 %
 
 
-%% Cost Funtcion (Vectorized)
+%% Cost Function (Vectorized)
 % y             m x 1
 % X             m x n
 % theta         n x 1
