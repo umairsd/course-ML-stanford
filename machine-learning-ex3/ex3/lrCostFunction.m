@@ -37,12 +37,44 @@ grad = zeros(size(theta));
 %
 
 
+%% Cost Funtcion (Vectorized)
+% y             m x 1
+% X             m x n
+% theta         n x 1
+
+% h_theta       m x 1
+h_theta = sigmoid(X * theta);
+
+fst = y .* log(h_theta);
+snd = (1 - y) .* log (1 - h_theta);
+
+summation = sum(fst + snd);
+J_orig = -summation / m;
 
 
+%% Gradient (Vectorized)
+% X                 % m x n
+% X'                % n x m
+% theta             % n x 1
+% X * theta         % m x 1
+% y                 % m x 1
+% sigmoid(X*theta)  % m x 1
+% => result         % n x 1 
+
+grad_summation = X' * (sigmoid(X * theta) - y);
+gradient_orig = grad_summation ./ m;
 
 
+%% Calculate the regularization factors
+% NOTE: Theta1 does not need to be regularized
+theta_without_theta1 = theta(2 : size(theta, 1));
+regJ = lambda * sum(theta_without_theta1 .* theta_without_theta1) / (2 * m);
 
+regG = (lambda/m) .* theta;
+regG(1) = 0;
 
+J = J_orig + regJ;
+grad = gradient_orig + regG;
 
 
 % =============================================================
