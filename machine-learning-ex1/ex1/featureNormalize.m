@@ -26,14 +26,24 @@ sigma = zeros(1, size(X, 2));
 % Hint: You might find the 'mean' and 'std' functions useful.
 %       
 
+mu = mean(X);
+sigma = std(X);
 
+newX = zeros(size(X,1), size(X,2));
 
+% This is a clunky way to calculate X_norm, but I kept running
+% into errors when attempting this, so that's why I am using 
+% two loops to be explicit about what I am calculating, and how.
+for row = 1:size(X,1)
+    for col = 1 : size(X,2)
+        numerator = X(row,col) - mu(col);
+        newVal = numerator / sigma(col);
+        
+        newX(row,col) = newVal;
+    end
+    
+end
 
-
-
-
-
-
-% ============================================================
+X_norm = newX;
 
 end

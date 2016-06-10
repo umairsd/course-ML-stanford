@@ -13,9 +13,13 @@ J = 0;
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
 
+% Using the formula J = 1/2m * (X*theta - y)'(X*theta - y) which
+% is provided in the assignment
 
+mat = X * theta - y;
+p = mat' * mat;
 
-
+J = p / (2 * m);
 
 % =========================================================================
 

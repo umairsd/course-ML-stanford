@@ -14,8 +14,14 @@ J = 0;
 %               You should set J to the cost.
 
 
+theta0 = theta(1);
+theta1 = theta(2);
 
+innerSum = theta0 * X(:,1) + theta1 * X(:,2) - y;
+innerSumSquared = innerSum .* innerSum;
 
+total = sum(innerSumSquared);
+J = total / (2 * m);
 
 % =========================================================================
 

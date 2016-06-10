@@ -16,16 +16,19 @@ for iter = 1:num_iters
     % Hint: While debugging, it can be useful to print out the values
     %       of the cost function (computeCostMulti) and gradient here.
     %
-
-
-
-
-
-
-
-
-
-
+    
+    
+    % number of features
+    n = size(X,2);
+    
+    innerSum = X * theta - y;
+    
+    for numFeature = 1 : n
+        innerSumTimesFeature = innerSum .* X(:,numFeature);
+        total = sum(innerSumTimesFeature);
+        
+        theta(numFeature) = theta(numFeature) - alpha * total / m;
+    end
 
     % ============================================================
 

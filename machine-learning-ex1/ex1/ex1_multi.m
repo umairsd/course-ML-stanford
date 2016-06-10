@@ -104,8 +104,16 @@ fprintf('\n');
 % ====================== YOUR CODE HERE ======================
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
-price = 0; % You should change this
 
+sqFeet = 1650;
+numBedrooms = 3;
+
+% As we are using gradient descent, we need to normalize our example as
+% well
+example = [ (sqFeet - mu(1))/sigma(1), (numBedrooms - mu(2))/sigma(2) ];
+
+newX = [1 example];
+price = newX * theta;
 
 % ============================================================
 
@@ -149,8 +157,8 @@ fprintf('\n');
 
 % Estimate the price of a 1650 sq-ft, 3 br house
 % ====================== YOUR CODE HERE ======================
-price = 0; % You should change this
 
+price = [1 sqFeet numBedrooms] * theta;
 
 % ============================================================
 
