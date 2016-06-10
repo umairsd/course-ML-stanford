@@ -22,11 +22,33 @@ p = zeros(size(X, 1), 1);
 %
 
 
+% Add ones to the X data matrix
+X = [ones(m, 1) X];
 
 
+% z(2) = Theta1 * a(1)
+% X             5000 x 401
+% Theta1        25 x 401
+% z(2)          25 x 5000
+z_2 = Theta1 * X';
+a_2 = sigmoid(z_2);
 
+% Add bias unit to a(2)
+a_2 = [ones(1, size(a_2, 2)); a_2];
 
+% a_2           26 x 5000
+% Theta2        10 x 26
+% a_3           10 x 5000
+z_3 = Theta2 * a_2;
+a_3 = sigmoid(z_3);
 
+% h_theta       10 x 5000
+% This means that we need to use h_theta' so that we can get
+% the highest probability for each of the K (K=10) classifers
+h_theta = a_3;
+
+[maxVal, classiferIndex] = max(h_theta', [], 2);
+p = classiferIndex;
 
 
 % =========================================================================
