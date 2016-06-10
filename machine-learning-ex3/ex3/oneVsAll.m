@@ -24,7 +24,7 @@ X = [ones(m, 1) X];
 %
 % Hint: theta(:) will return a column vector.
 %
-% Hint: You can use y == c to obtain a vector of 1's and 0's that tell use 
+% Hint: You can use y == c to obtain a vector of 1's and 0's that tell us 
 %       whether the ground truth is true/false for this class.
 %
 % Note: For this assignment, we recommend using fmincg to optimize the cost
@@ -49,7 +49,15 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
-
+for c = 1:num_labels
+    options = optimset('GradObj', 'on', 'MaxIter', 50);
+    
+    initial_theta = zeros(n+1, 1);
+    
+    [new_theta_c] = fmincg( @(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
+    
+    all_theta(c,:) = new_theta_c;
+end
 
 
 
