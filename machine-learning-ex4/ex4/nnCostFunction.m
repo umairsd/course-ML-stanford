@@ -161,10 +161,10 @@ for i = 1 : m
     % Theta2    10 x 26     [num_labels x (hidden_layer_size+1)]
     % z_3       10 x 1
     z_3 = Theta2 * a_2;
-    a_2 = sigmoid(z_3);
+    a_3 = sigmoid(z_3);
     
     
-    h_theta_i = a_2;
+    h_theta_i = a_3;
   
     %{
     Also, recall that whereas the original labels (in the variable y) 
@@ -214,6 +214,113 @@ total = sum(theta1_squared(:)) + sum(theta2_squared(:));
 regularization = lambda * total / (2 * m);
 
 J = J + regularization;
+
+
+
+%% Backprogpagation
+
+
+% For each example in the training set, let's calculate the a_l using 
+% forward propagation, and then use backpropagation to compute the
+% gradients
+%
+% We can also use this loop to compute h_theta and thus cost J
+
+% D1    25 x 401
+D1 = zeros(size(Theta1));
+% D2    10 x 26
+D2 = zeros(size(Theta2));
+
+for i = 1 : m
+    % STEP-1: Use forward propagation to compute a_1, a_2, a_3
+    % x_i       401 x 1     [(n+1) x 1]
+    % a_1       401 x 1
+    x_i = X(i, :)';
+    a_1 = x_i;
+    
+    % First Layer
+    % Theta1    25 x 401    [hidden_layer_size x n]
+    % z_2       25 x 1
+    % a_2       25 x 1
+    z_2 = Theta1 * x_i;
+    a_2 = sigmoid(z_2);
+    
+    % Add the bias unit to a_2
+    % a_2       26 x 1
+    numColsA_2 = size(a_2,2);
+    a_2 = [ones(1,numColsA_2); a_2];
+    
+    % Theta2    10 x 26     [num_labels x (hidden_layer_size+1)]
+    % z_3       10 x 1
+    % a_3       10 x 1
+    z_3 = Theta2 * a_2;
+    a_3 = sigmoid(z_3);
+    
+    % So, 
+    % a_1       401 x 1
+    % a_2       26 x 1
+    % a_3       10 x 1
+    % *******
+    
+    
+    % STEP-2: Use y_i, and compute sdelta_3 = a_3 - y_i;
+    %{
+    Recall that whereas the original labels (in the variable y) 
+    were 1, 2, ..., 10, for the purpose of training a neural network, we 
+    need to recode the labels as vectors containing only values 0 or 1 
+    %}
+    % y_i       10 x 1      [K x 1]
+    y_i = zeros(num_labels, 1);
+    y_index = y(i);
+    y_i(y_index) = 1;    
+
+    % sdelta_3  10 x 1
+    sdelta3 = a_3 - y_i;
+    
+    
+    % STEP-3: Compute sdelta2
+    % Theta2    10 x 26
+    % Theta2'   26 x 10
+    % sdelta3   10 x 1
+    % d2_temp   26 x 1
+    % z_2       25 x 1
+    % sdelta2   25 x 1
+    d2_temp = Theta2' * sdelta3;
+    sdelta2 = d2_temp(2:end) .* sigmoidGradient(z_2);
+    
+    
+    
+    % STEP-4: Calculate D1 and D2
+    % D1        25 x 401
+    % sdelta2   25 x 1
+    % a_1       401 x 1   
+    D1 = D1 + sdelta2 * a_1';
+
+    % D2        10 x 26
+    % sdelta3   10 x 1
+    % a_2       26 x 1   
+    D2 = D2 + sdelta3 * a_2';
+    
+    
+    %{
+    % This loop can be used to compute the cost as well. For now, 
+    % commenting this out, as I've already calculated the cost using 
+    % matrices.
+    %
+    h_theta_i = a_3;
+    % Now,
+    % h_theta_i     10x1
+    % y_i           10x1
+    fst = y_i .* log(h_theta_i);    
+    snd = (1 - y_i) .* log(1 - h_theta_i);
+     
+    inner_sum = sum(fst + snd);
+    J = J + inner_sum;
+    %}
+end
+
+Theta1_grad = D1/m;
+Theta2_grad = D2/m;
 
 % -------------------------------------------------------------
 
