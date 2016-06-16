@@ -65,17 +65,13 @@ Theta2_grad = zeros(size(Theta2));
 
 %% Part-1: Forward Propagation to Calculate Cost
 
-
-
 % X         m x n (e.g. 5000 x 400)
 % y         m x 1 (e.g. 5000 x 1)
 % Adding a column of ones
 X = [ones(m, 1) X];
 
-% % Get the columns (i.e. features *per* example) -- 401
-% n = size(X, 2);
-
-% For each example in the training set, let's calculate the h_theta
+% For each example in the training set, let's calculate the h_theta, and
+% use that to compute the cost for each training set
 for i = 1 : m
     % x_i       401 x 1     [(n+1) x 1]
     x_i = X(i, :)';
@@ -124,7 +120,6 @@ end
 % Need to divide J by m
 J = J / m;
 J = -J;
-
 
 
 %% Regularized Cost Function
