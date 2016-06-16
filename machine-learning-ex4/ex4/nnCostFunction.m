@@ -193,7 +193,7 @@ J = -J;
 %}
 
 
-%% Regularized Cost Function
+%% Part 2: Regularized Cost Function
 
 
 %{
@@ -217,7 +217,7 @@ J = J + regularization;
 
 
 
-%% Backprogpagation
+%% Part-3: Backprogpagation
 
 
 % For each example in the training set, let's calculate the a_l using 
@@ -319,8 +319,21 @@ for i = 1 : m
     %}
 end
 
+
 Theta1_grad = D1/m;
 Theta2_grad = D2/m;
+
+
+%% Part 4: Gradients with regularization
+Reg1 = (lambda / m) * Theta1;
+Reg2 = (lambda / m) * Theta2;
+
+% % Set the first column (bias column) to zero
+Reg1(:,1) = zeros(size(Reg1,1), 1);
+Reg2(:,1) = zeros(size(Reg2,1), 1);
+
+Theta1_grad = Theta1_grad + Reg1;
+Theta2_grad = Theta2_grad + Reg2;
 
 % -------------------------------------------------------------
 
