@@ -70,6 +70,75 @@ Theta2_grad = zeros(size(Theta2));
 % Adding a column of ones
 X = [ones(m, 1) X];
 
+% X'        401 x 5000
+% Theta1    25 x 401
+% z_2       25 x 5000
+% a_2       25 x 5000
+z_2 = Theta1 * X';
+a_2 = sigmoid(z_2);
+
+% Add the bias unit to a_2
+% a_2       26 x 5000
+numColsA_2 = size(a_2,2);
+a_2 = [ones(1,numColsA_2); a_2];
+
+
+% a_2       26 x 5000
+% Theta2    10 x 26
+% z_3       10 x 5000
+% a_3       10 x 5000
+z_3 = Theta2 * a_2;
+a_3 = sigmoid(z_3);
+
+% h_theta   5000 x 10
+h_theta = a_3';
+
+%{
+Also, recall that whereas the original labels (in the variable y) 
+were 1, 2, ..., 10, for the purpose of training a neural network, we 
+need to recode the labels as vectors containing only values 0 or 1 
+%}
+
+% y         5000 x 1
+% yK        5000 x 10
+yk = zeros(m, num_labels);
+
+for i = 1:m
+    % yk_i       1 x 10
+    yk_i = yk(i,:);
+    
+    % y_i is a value between 1 and 10 (our K output levels)
+    y_i = y(i);
+    
+    yk_i(y_i) = 1;
+    
+    yk(i,:) = yk_i;
+end
+
+% Now,
+% h_theta       5000x10
+% yk            5000x10
+
+% fst           5000x10
+% snd           5000x10
+% inner_sum     5000x10
+fst = yk .* log(h_theta);
+snd = (1 - yk) .* log(1 - h_theta);
+inner_sum = (fst + snd);
+
+J = sum(inner_sum(:));
+
+% Need to divide J by m
+J = J / m;
+J = -J;
+
+
+%{
+
+% ***********
+% Below is a non-vectorized implementation, which is correct and works.
+% ***********
+
 % For each example in the training set, let's calculate the h_theta, and
 % use that to compute the cost for each training set
 for i = 1 : m
@@ -120,6 +189,8 @@ end
 % Need to divide J by m
 J = J / m;
 J = -J;
+
+%}
 
 
 %% Regularized Cost Function
