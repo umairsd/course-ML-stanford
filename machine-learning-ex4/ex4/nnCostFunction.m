@@ -127,14 +127,27 @@ J = -J;
 
 
 
+%% Regularized Cost Function
 
 
+%{
+Both Theta1 and Theta2 contains bias units. In our example, Theta1 is 
+25x401 and Theta2 is 10x26 matrices. We need to remove the first column
+from both of these, for the regularization
+%}
+% Theta1_reg    25 x 400
+Theta1_reg = Theta1(:,2:end);
+% Theta2_reg    10 x 25
+Theta2_reg = Theta2(:,2:end);
 
+theta1_squared = Theta1_reg .* Theta1_reg;
+theta2_squared = Theta2_reg .* Theta2_reg;
 
+total = sum(theta1_squared(:)) + sum(theta2_squared(:));
 
+regularization = lambda * total / (2 * m);
 
-
-
+J = J + regularization;
 
 % -------------------------------------------------------------
 
