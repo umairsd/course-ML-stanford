@@ -63,11 +63,67 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
+%% Part-1: Forward Propagation to Calculate Cost
 
 
 
+% X         m x n (e.g. 5000 x 400)
+% y         m x 1 (e.g. 5000 x 1)
+% Adding a column of ones
+X = [ones(m, 1) X];
 
+% % Get the columns (i.e. features *per* example) -- 401
+% n = size(X, 2);
 
+% For each example in the training set, let's calculate the h_theta
+for i = 1 : m
+    % x_i       401 x 1     [(n+1) x 1]
+    x_i = X(i, :)';
+    
+    % First Layer
+    % Theta1    25 x 401    [hidden_layer_size x n]
+    % z_2       25 x 1
+    z_2 = Theta1 * x_i;
+    % a_2       25 x 1
+    a_2 = sigmoid(z_2);
+    
+    % Add the bias unit to a_2
+    % a_2       26 x 1
+    numColsA_2 = size(a_2,2);
+    a_2 = [ones(1,numColsA_2); a_2];
+    
+    
+    % Theta2    10 x 26     [num_labels x (hidden_layer_size+1)]
+    % z_3       10 x 1
+    z_3 = Theta2 * a_2;
+    a_2 = sigmoid(z_3);
+    
+    
+    h_theta_i = a_2;
+  
+    %{
+    Also, recall that whereas the original labels (in the variable y) 
+    were 1, 2, ..., 10, for the purpose of training a neural network, we 
+    need to recode the labels as vectors containing only values 0 or 1 
+    %}
+    % y_i       10 x 1      [K x 1]
+    y_i = zeros(num_labels, 1);
+    y_index = y(i);
+    y_i(y_index) = 1;    
+    
+    % Now,
+    % h_theta_i     10x1
+    % y_i           10x1
+     fst = y_i .* log(h_theta_i);    
+     snd = (1 - y_i) .* log(1 - h_theta_i);
+     
+     inner_sum = sum(fst + snd);
+     J = J + inner_sum;
+end
+
+% Need to divide J by m
+J = J / m;
+J = -J;
 
 
 
