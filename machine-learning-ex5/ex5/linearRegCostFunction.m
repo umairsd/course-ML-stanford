@@ -70,7 +70,6 @@ regTerm = (lambda/m) * theta;
 regTerm(1) = 0;
 
 grad = grad_nonV + regTerm;
-
 grad = grad(:);
 
 end
