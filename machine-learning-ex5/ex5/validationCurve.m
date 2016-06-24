@@ -40,7 +40,25 @@ error_val = zeros(length(lambda_vec), 1);
 %
 
 
-
+for i = 1:length(lambda_vec)
+    lambda = lambda_vec(i);
+    
+    % From notes:
+    % Step 5: Learn parameters Theta for the model selected, using
+    %         J_train with lambda selected
+    theta = trainLinearReg(X, y, lambda);
+    
+    % Step 6: Compute train error using the learned theta on J_train
+    %         without regularization (lambda = 0)
+    [J_train_i, grad_train] = linearRegCostFunction(X, y, theta, 0);
+    
+    % Step 7: Compute CV error using the learned theta on J_cv
+    %         without regularization (lambda = 0)    
+    [J_cv_i, grad_cv]       = linearRegCostFunction(Xval, yval, theta, 0);    
+    
+    error_train(i) = J_train_i;
+    error_val(i) = J_cv_i;
+end
 
 
 
