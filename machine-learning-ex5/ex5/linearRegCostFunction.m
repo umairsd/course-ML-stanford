@@ -19,18 +19,34 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+%% Cost Function
+% X         m x 2
+% X'        2 x m
+% theta     2 x 1
+% t1        m x 1
+t1 = X * theta;
 
+% y         m x 1
+% t2, t3    m x 1
+t2 = t1 - y;
+t3 = t2 .* t2;
 
+% Calculate the first term of J
+J_noReg = sum(t3) / (2 * m);
 
+% Regularization Parameter
+theta_squared = theta .* theta;
 
+% We must ignore theta0, which in this matrix is theta(1)
+theta_sum = sum(theta_squared(2:end));
 
+regularization = theta_sum * lambda / (2 * m);
 
-
-
-
-
+J = J_noReg + regularization;
 
 % =========================================================================
+
+
 
 grad = grad(:);
 
