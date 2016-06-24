@@ -46,7 +46,30 @@ J = J_noReg + regularization;
 
 % =========================================================================
 
+%% Gradient
+grad_nonV = zeros(size(theta));
 
+n = size(theta);
+
+for j = 1:n
+    grad_j = 0;
+    
+    for i = 1:m
+        x_i = X(i,:);               % 1 x n
+        y_i = y(i,:);               % 1 x 1
+        % theta                     % n x 1
+        h_i = x_i * theta;          % 1 x 1
+        
+        grad_j = grad_j + (h_i - y_i) * x_i(j);
+    end
+    
+    grad_nonV(j) = grad_j / m;
+end
+
+regTerm = (lambda/m) * theta;
+regTerm(1) = 0;
+
+grad = grad_nonV + regTerm;
 
 grad = grad(:);
 
