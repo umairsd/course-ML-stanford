@@ -88,7 +88,7 @@ JSON. The detailed help info for the four functions can be found below:
  
           Nedialko Krouchev: http://www.mathworks.com/matlabcentral/fileexchange/25713
              created on 2009/11/02
-          François Glineur: http://www.mathworks.com/matlabcentral/fileexchange/23393
+          Franï¿½ois Glineur: http://www.mathworks.com/matlabcentral/fileexchange/23393
              created on  2009/03/22
           Joel Feenstra:
           http://www.mathworks.com/matlabcentral/fileexchange/20565
@@ -131,7 +131,7 @@ JSON. The detailed help info for the four functions can be found below:
        dat=loadjson('{"obj":{"string":"value","array":[1,2,3]}}')
        dat=loadjson(['examples' filesep 'example1.json'])
        dat=loadjson(['examples' filesep 'example1.json'],'SimplifyCell',1)
-</pre>
+</spanre>
 
 === savejson.m ===
 
@@ -214,7 +214,7 @@ JSON. The detailed help info for the four functions can be found below:
                 'SpecialData',[nan, inf, -inf]);
        savejson('jmesh',jsonmesh)
        savejson('',jsonmesh,'ArrayIndent',0,'FloatFormat','\t%.5g')
- </pre>
+ </spanre>
 
 === loadubjson.m ===
 
@@ -256,7 +256,7 @@ JSON. The detailed help info for the four functions can be found below:
        dat=loadubjson(ubjdata)
        dat=loadubjson(['examples' filesep 'example1.ubj'])
        dat=loadubjson(['examples' filesep 'example1.ubj'],'SimplifyCell',1)
-</pre>
+</spanre>
 
 === saveubjson.m ===
 
@@ -327,7 +327,7 @@ JSON. The detailed help info for the four functions can be found below:
                 'SpecialData',[nan, inf, -inf]);
        saveubjson('jsonmesh',jsonmesh)
        saveubjson('jsonmesh',jsonmesh,'meshdata.ubj')
-</pre>
+</spanre>
 
 
 === examples ===
